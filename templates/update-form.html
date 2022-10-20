@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Pet Details {% endblock %}
+
+{% block content %} 
+<div class="container">
+    <h1>Pet Detail</h1>
+    <ul class="list-unstyled" >
+        <li><h5>Name: {{pet.name}}</h5></li>
+        <li>Species: {{pet.species}}</li>
+        {% if pet.photo_url %}
+        <li><div class="img"><img src="{{pet.photo_url}}" alt="photo of the pet" ></div></li>
+        {% endif %}
+        {% if pet.age %}
+        <li>Age: {{pet.age}}</li>
+        {% endif %}
+    </ul>
+    <form action="/{{pet.id}}" method="POST">
+        {{form.hidden_tag()}}
+        
+        <!-- this sentence after if is saying that we want all the field except the one the type is hidden. the CSRF token is in the hidden tag and you don't want to print that on HTML screen -->
+        <p>
+        {{form.photo_url.label}}
+        {{form.photo_url(class_="form_control")}}
+        {% for err in form.photo_url.errors %}
+        {{err}}
+        {% endfor %}
+        </p>
+        <p>
+        {{form.notes.label}}
+        {{form.notes(class_="form_control")}}
+        </p>
+        <p>
+        {{form.available.label}}
+        {{form.available(class_="form_control")}}
+        </p>
+
+        <button class="btn btn-success" >update</button>
+        <button class="btn btn-outline-danger" formaction="/">Cancel</button>   
+
+    </form>
+
+</div>
+{% endblock %}
+
+<!-- Photo URL
+    # Notes
+    # Available -->

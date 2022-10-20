@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} Add a New Pet {% endblock %}
+
+{% block content %} 
+<div class="container">
+    <h1>Add a New Pet</h1>
+    <form action="/add" method="POST">
+        {{form.hidden_tag()}}
+        
+        {% for field in form
+            if field.widget.input_type != 'hidden' %}
+        <!-- this sentence after if is saying that we want all the field except the one the type is hidden. the CSRF token is in the hidden tag and you don't want to print that on HTML screen -->
+        <p>
+            {{field.label}}
+            {{field}}
+            {% for err in field.errors %}
+             {{err}}
+            {% endfor %}
+           
+        </p>
+        {% endfor %}
+        <button class="btn btn-success" >Submit</button>
+        <button class="btn btn-outline-danger" formaction="/" formmethod="GET">Cancle</button>   
+
+    </form>
+
+</div>
+{% endblock %}
